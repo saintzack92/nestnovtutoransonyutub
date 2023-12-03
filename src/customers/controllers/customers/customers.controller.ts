@@ -1,7 +1,7 @@
-import { Controller,Get,Param,ParseIntPipe,Req,Res,HttpException,HttpStatus, Post,Body } from '@nestjs/common';
+import { Controller,Get,Param,ParseIntPipe,Req,Res,HttpException,HttpStatus, Post,Body,UsePipes,ValidationPipe} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CustomersService } from 'src/customers/services/customers/customers.service';
-import { CreateCustomerDto } from 'src/dto/CreateCustomer.dto';
+import { CreateCustomerDto } from 'src/dto/CreateCustomerDto.dto';
 
 @Controller('customers')
 export class CustomersController {
@@ -39,10 +39,16 @@ export class CustomersController {
     getAllCustomer(){
         return this.customersService.getAllCustomer()
     }
+
     @Post('create')
-    async createCustomer(@Body() createCustomerDto:CreateCustomerDto){
+    @UsePipes(ValidationPipe)
+    createCustomer(@Body() createCustomerDto:CreateCustomerDto, @Res() res:Response){
         console.log(createCustomerDto);
+        
         this.customersService.createCustomer(createCustomerDto)
+        // if(createCustomerDto){
+        //     res.status(HttpStatus.CREATED).send({message:`customer ${createCustomerDto.name} created successfully`})
+        // }
         
     }
     
