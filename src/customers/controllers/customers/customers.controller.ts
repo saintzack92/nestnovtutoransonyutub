@@ -46,9 +46,9 @@ export class CustomersController {
         console.log(createCustomerDto);
         
         this.customersService.createCustomer(createCustomerDto)
-        // if(createCustomerDto){
-        //     res.status(HttpStatus.CREATED).send({message:`customer ${createCustomerDto.name} created successfully`})
-        // }
+        if(createCustomerDto){
+            res.status(HttpStatus.CREATED).send({message:`customer ${createCustomerDto.name} created successfully`})
+        }
         
     }
     
