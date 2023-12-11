@@ -3,7 +3,8 @@ import {InjectRepository} from '@nestjs/typeorm'
 import { User as UserEntity} from 'src/typeorm';
 import { CreateUserDto } from 'src/users/dto/CreateUser';
 import { SerializedUser, User } from 'src/users/types/Index';
-import {Repository} from 'typeorm'
+import { encodePassword } from 'src/utils/bcrypt';
+import {FindOneOptions, Repository} from 'typeorm'
 
 @Injectable()
 export class UsersService {
@@ -52,8 +53,20 @@ export class UsersService {
         })
     }
 
-    createUser(createUserDto:CreateUserDto){
-        const newUser =this.userRepository.create(createUserDto)
+    async createUser(createUserDto:CreateUserDto){
+        const password =await encodePassword(createUserDto.password)
+        console.log('password: ', password);
+        
+        const newUser =this.userRepository.create({...createUserDto,password})
         return this.userRepository.save(newUser)
     }
+
+    findUserByUsername(username: string): Promise<UserEntity | undefined> {
+        // const findOptions: FindOneOptions<UserEntity> = {
+        //   where: {
+        //     username: username,
+        //   },
+        // };
+        return this.userRepository.findOne({where: { username} });
+      }
 }

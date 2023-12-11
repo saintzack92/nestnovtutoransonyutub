@@ -4,9 +4,11 @@ import { AuthService } from './services/auth/auth.service';
 import { UsersService } from 'src/users/services/users/users.service';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { User } from 'src/typeorm';
+import { PassportModule } from '@nestjs/passport';
+import { LocalStategy } from './utils/localStrategy';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([User])],
+  imports:[TypeOrmModule.forFeature([User]),PassportModule],
   controllers: [AuthController],
   providers: [
     {
@@ -16,7 +18,8 @@ import { User } from 'src/typeorm';
     {
       provide:'USER_SERVICE',
       useClass:UsersService
-    }
+    },
+    LocalStategy
   ],
 })
 export class AuthModule {}
