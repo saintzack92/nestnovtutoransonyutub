@@ -73,7 +73,7 @@ export class UsersService {
         // };
         console.log('findUserByUsername');
         
-        return this.userRepository.findOne({where: { username:username} });
+        return this.userRepository.findOne({where: { username} });
       }
 
       findUserById(id:number){
