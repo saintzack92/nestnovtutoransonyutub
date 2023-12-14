@@ -28,6 +28,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   getUsers(id:number,username:string) {
+    
     return this.userService.getUsers(id,username);
   }
 
@@ -48,7 +49,9 @@ export class UsersController {
     console.log('getByUserId works');
 
     const user = this.userService.getUserById(id);
-    if (user) return new SerializedUser(user);
+    console.log(user);
+    
+    if (user) {return new SerializedUser(user)}
     else {
       throw new UserNotFoundException('user not found', HttpStatus.BAD_REQUEST);
     }

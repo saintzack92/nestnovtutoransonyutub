@@ -42,7 +42,7 @@ export class UsersService {
         let uzer = await this.userRepository.find({where:{
             id,username
         }})
-        return uzer.map((user)=>new SerializedUser(user))
+        return uzer
     }
 
     getUserByUsername(username:string){
