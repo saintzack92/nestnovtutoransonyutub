@@ -6,6 +6,7 @@ import { CustomersModule } from './customers/customers.module';
 import { UsersModule } from './users/users.module';
 import entities, { User } from './typeorm';
 import { AuthModule } from './auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -16,12 +17,16 @@ import { AuthModule } from './auth/auth.module';
     host:'localhost',
     port:3306,
     username:'root',
-    password:'UINw580i!',
+    password:'P@ssw0rd009!',
     database:'nesttutorialnov',
     entities:entities,
     synchronize:true,
   }),
-    AuthModule],
+    AuthModule,
+    PassportModule.register({
+      session:true
+    })
+  ],
   controllers: [AppController,],
   providers: [AppService],
 })

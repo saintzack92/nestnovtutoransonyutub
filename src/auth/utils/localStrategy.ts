@@ -17,8 +17,10 @@ export class LocalStategy extends PassportStrategy(Strategy){
         console.log('username is : ',username);
         console.log('password is : ',password);
         
-        const user = this.authService.validateUser(username,password)
+        const user = await this.authService.validateUser(username,password)
         if (!user){
+            console.log('no user');
+            
             throw new UnauthorizedException ()
         }
         return user

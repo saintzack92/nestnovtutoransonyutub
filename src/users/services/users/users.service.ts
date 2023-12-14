@@ -36,9 +36,13 @@ export class UsersService {
         // },
     ]
 
-    getUsers(){
+    async getUsers(id:number,username:string){
         // return this.users.map((user)=>plainToClass(SerializedUser,user))
-        return this.users.map((user)=>new SerializedUser(user) )
+        // return this.users.map((user)=>new SerializedUser(user) )
+        let uzer = await this.userRepository.find({where:{
+            id,username
+        }})
+        return uzer.map((user)=>new SerializedUser(user))
     }
 
     getUserByUsername(username:string){
@@ -67,6 +71,14 @@ export class UsersService {
         //     username: username,
         //   },
         // };
-        return this.userRepository.findOne({where: { username} });
+        console.log('findUserByUsername');
+        
+        return this.userRepository.findOne({where: { username:username} });
+      }
+
+      findUserById(id:number){
+        console.log('findUserById');
+        
+        return this.userRepository.findOne({where:{id}})
       }
 }

@@ -27,8 +27,8 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  getUsers() {
-    return this.userService.getUsers();
+  getUsers(id:number,username:string) {
+    return this.userService.getUsers(id,username);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

@@ -5,10 +5,10 @@ import { UsersService } from 'src/users/services/users/users.service';
 import {TypeOrmModule} from '@nestjs/typeorm'
 import { User } from 'src/typeorm';
 import { PassportModule } from '@nestjs/passport';
-import { LocalStategy } from './utils/localStrategy';
+import { LocalStategy } from './utils/LocalStrategy';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([User]),PassportModule],
+  imports:[TypeOrmModule.forFeature([User]),PassportModule.register({session:true})],
   controllers: [AuthController],
   providers: [
     {
