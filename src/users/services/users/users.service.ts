@@ -36,13 +36,12 @@ export class UsersService {
         // },
     ]
 
-    async getUsers(id:number,username:string){
+    async getUsers(username:string){
         // return this.users.map((user)=>plainToClass(SerializedUser,user))
         // return this.users.map((user)=>new SerializedUser(user) )
-        let uzer = await this.userRepository.find({where:{
-            id,username
-        }})
-        return uzer
+        let uzer = await this.userRepository.find({where:{username:username}
+            })
+        return uzer.map((user)=>{return new SerializedUser(user)}) 
     }
 
     getUserByUsername(username:string){

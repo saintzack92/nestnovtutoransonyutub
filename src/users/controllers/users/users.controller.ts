@@ -12,7 +12,9 @@ import {
   Body,
   ValidationPipe,
   UsePipes,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthenticatedGueard } from 'src/auth/utils/LocalGuard';
 import { CreateUserDto } from 'src/users/dto/CreateUser';
 import { UserNotFoundException } from 'src/users/exception/UserNotFoundException';
 import { UsersService } from 'src/users/services/users/users.service';
@@ -25,11 +27,12 @@ export class UsersController {
     private readonly userService: UsersService,
   ) {}
 
+
+  @UseGuards(AuthenticatedGueard)
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get()
-  getUsers(id:number,username:string) {
-    
-    return this.userService.getUsers(id,username);
+  @Get('')
+  getUsers(username:string) {
+    return this.userService.getUsers(username);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -49,9 +52,7 @@ export class UsersController {
     console.log('getByUserId works');
 
     const user = this.userService.getUserById(id);
-    console.log(user);
-    
-    if (user) {return new SerializedUser(user)}
+    if (user) return new SerializedUser(user);
     else {
       throw new UserNotFoundException('user not found', HttpStatus.BAD_REQUEST);
     }

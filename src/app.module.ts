@@ -17,7 +17,7 @@ import { PassportModule } from '@nestjs/passport';
     host:'localhost',
     port:3306,
     username:'root',
-    password:'UINw580i!',
+    password:'P@ssw0rd009!',
     database:'nesttutorialnov',
     entities:entities,
     synchronize:true,
